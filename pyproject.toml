@@ -1,0 +1,45 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+# 改名：example 换成平台的 id，demo 换成这个站的 id。要一起改的地方见 README「从模板开始」
+name = "jianshanagent-site-example-demo"
+version = "0.1.0"
+description = "JianShanAgent 站点插件（<平台>上的站）：<这个 wiki 的名字>"
+readme = "README.md"
+requires-python = ">=3.12"
+license = { text = "MIT" }
+dependencies = ["jianshanagent", "jianshanagent-site-example"]   # 核心，和它的上级（平台插件）
+
+# 登记成站点插件：名字是插件 id，值是包路径
+[project.entry-points."jianshanagent.sites"]
+demo = "jianshanagent_site_example_demo"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/jianshanagent_site_example_demo"]
+
+# 开发时用旁边目录里的核心和上级插件（几个仓库并排放在同一个目录下）
+[tool.uv.sources]
+jianshanagent = { path = "../agent-core", editable = true }
+jianshanagent-site-example = { path = "../template-site-platform", editable = true }
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8",
+  "pytest-asyncio>=0.23",
+  "ruff>=0.4",
+]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+pythonpath = ["src", "tests"]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]

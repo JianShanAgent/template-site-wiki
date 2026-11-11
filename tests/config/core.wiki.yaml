@@ -1,0 +1,5 @@
+# 用这个站点插件的部署，config/core.wiki.yaml 写成这样（测试里也拿它当「一个用了它的部署」）。
+name: "示例"
+api_url: "https://wiki.example/api.php"
+# 只写最末一级；它的上级（平台插件 example）会自动带出来、先加载
+site: demo

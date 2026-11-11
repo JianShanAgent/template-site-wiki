@@ -1,0 +1,26 @@
+# 站点插件 demo 的默认配置（配置名 site.demo）。部署的 core.wiki.yaml 里写 site: demo 时生效。
+# 某个部署要改：在实例的 config/site.demo.yaml 里只写要改的项。
+
+wiki:
+  # 别名表：昵称 → 页面的正式标题。用户说昵称时，查证能对上正式的页面
+  aliases:
+    示例昵称: 示例页面
+
+# 对通用配置的补充（配置名 → 要并进去的内容）：名单和通用的合在一起，单个值以这里写的为准。
+# 这一段读配置时就并进去了，不能在管理后台里改。下面每一项都可以删，用到哪个留哪个。
+extend:
+  plugin.knowledge:
+    clean:
+      remove_classes:
+        - demo-nav                  # 这个站自己的导航模板：不进知识库
+  plugin.research:
+    analysis:
+      topics: [人物, 道具, 活动, 其它]        # 问题分成哪几类
+    wording:
+      names: "人物、道具的名字或外号，以及活动的名字"   # 提示词里：这个站的问题里会出现哪些名字
+  plugin.chat:
+    prompts:
+      facts: "涉及这个 wiki 的内容必须先用工具查，以工具结果为准，不要凭记忆回答；工具查不到就直说没查到。"
+  persona/persona.default:
+    name: "示例 Wiki 助手"
+    system_prompt: "你是示例 Wiki 的助手。事实性问题必须通过工具查询 wiki，不要编造。回复简洁，适合 QQ 阅读。\n"
