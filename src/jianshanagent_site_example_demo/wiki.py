@@ -16,7 +16,7 @@ from jianshanagent_site_example.wiki import ExamplePlatform
 
 
 class DemoProvider(WikiProvider):
-    id = "demo"  # 和清单里的 id 一样
+    id = "example_demo"  # 和清单里的 id 一样
 
     def __init__(self, platform: ExamplePlatform, aliases: Mapping[str, str]):
         #: 上级（平台插件）在查询这个扩展点上的实例：要读平台的接口时用 ``self.platform.fetch(...)``

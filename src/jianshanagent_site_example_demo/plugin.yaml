@@ -1,5 +1,5 @@
 # 插件清单（格式见核心仓库 agent-core 的 docs/插件规范.md）
-id: demo                   # 和 pyproject.toml 里登记的名字一样；只写这一级，不带平台
+id: example_demo           # 和 pyproject.toml 里登记的名字一样；有上级的，以「上级的 id_」开头
 kind: site
 name: 示例 wiki
 description: <一两句话：这个 wiki 是什么，这个插件管它的哪些特有的东西>

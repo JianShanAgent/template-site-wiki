@@ -4,5 +4,5 @@
 - ``knowledge``：往知识库里接这个站自己的内容；
 - ``extend``：这个站的清洗规则、提示词里的说法、人设（见 ``config.yaml``）。
 
-上级是平台插件 ``example``。配置名 ``site.demo``。
+上级是平台插件 ``example``。配置名 ``site.example_demo``。
 """

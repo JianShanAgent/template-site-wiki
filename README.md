@@ -65,10 +65,10 @@ extend:
 | 文件或目录 | 修改内容 |
 |---|---|
 | `src/jianshanagent_site_example_demo/` | 目录重命名为 `src/jianshanagent_site_acme_foo/`（无上级平台则叫 `jianshanagent_site_foo`） |
-| `pyproject.toml` | 修改 `[project].name`、上级依赖、`[project.entry-points."jianshanagent.sites"]` 里的 `foo = "jianshanagent_site_acme_foo"` |
-| `plugin.yaml` | 修改 `id: foo`、`parent: acme`（**无上级平台则删掉 `parent` 这一行**）、`name` 与 `description` |
-| `wiki.py`、`knowledge.py` | 类属性 `id = "foo"`；无上级平台时去掉 `setup.parent(...)` 相关导入和调用 |
-| `config.yaml`、`tests/` | 测试用例里的 `site.foo`、`site: foo` 与包导入路径 |
+| `pyproject.toml` | 修改 `[project].name`、上级依赖、`[project.entry-points."jianshanagent.sites"]` 里的 `acme_foo = "jianshanagent_site_acme_foo"` |
+| `plugin.yaml` | 修改 `id: acme_foo`、`parent: acme`（有上级的插件，id 以「上级的 id_」开头；**无上级平台则 id 就是 `foo`，并删掉 `parent` 这一行**）、`name` 与 `description` |
+| `wiki.py`、`knowledge.py` | 类属性 `id = "acme_foo"`；无上级平台时去掉 `setup.parent(...)` 相关导入和调用 |
+| `config.yaml`、`tests/` | 测试用例里的 `site.acme_foo`、`site: acme_foo` 与包导入路径 |
 
 **3. 运行测试与规范自检**
 不用担心漏改名字——本模板自带核心提供的 `check_plugin` 规范自检，哪里包名、id 或上级对不上会直接给出中文修复提示（本地测试时请将 [`agent-core`](https://github.com/JianShanAgent/agent-core) 放在同级目录 `../agent-core`）：
@@ -84,9 +84,12 @@ uv run pytest
    ```toml
    "jianshanagent-site-acme-foo @ git+https://github.com/<你的用户名>/site-acme-foo.git",
    ```
-2. 在 `config/core.wiki.yaml` 填入最末一级的插件 `id`（有上级平台时上级会自动按序加载）：
+2. 在 `config/core.wiki.yaml` 的 `wikis` 名单里，给这个 wiki 填入最末一级的插件 `id`（有上级平台时上级会自动按序加载）：
    ```yaml
-   site: foo
+   wikis:
+     - id: main
+       api_url: "https://your.wiki/api.php"
+       site: acme_foo
    ```
 3. 重新执行 `uv sync` 或 `docker compose up -d --build` 即可生效。
 
@@ -95,9 +98,9 @@ uv run pytest
 ### 路线 B：直接放进实例仓库的 `sites/` 目录（免建新仓、免打包）
 
 如果不想多维护一个仓库：
-1. 把 `src/jianshanagent_site_example_demo/` 整个文件夹复制到你实例仓库的 `sites/<你的id>/`（例如 `sites/foo/`）。
-2. 把里面的 `plugin.yaml` 和 `wiki.py` / `knowledge.py` 里的 `id` 改成 `foo`（没有上级平台就删掉 `parent` 行）。
-3. 在实例仓库的 `config/core.wiki.yaml` 写上 `site: foo`，直接启动机器人即可加载。
+1. 把 `src/jianshanagent_site_example_demo/` 整个文件夹复制到你实例仓库的 `sites/<你的id>/`（例如 `sites/acme_foo/`，目录名就是插件 id）。
+2. 把里面的 `plugin.yaml` 和 `wiki.py` / `knowledge.py` 里的 `id` 改成 `acme_foo`（没有上级平台就叫 `foo`，并删掉 `parent` 行）。
+3. 在实例仓库的 `config/core.wiki.yaml` 里给这个 wiki 写上 `site: acme_foo`，直接启动机器人即可加载。
 
 详细规范请查阅 [`agent-core` 插件规范](https://github.com/JianShanAgent/agent-core/blob/main/docs/插件规范.md)。全部仓库目录见 [JianShanAgent 组织主页](https://github.com/JianShanAgent)。
 

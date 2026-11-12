@@ -16,7 +16,7 @@ from jianshanagent.plugins.knowledge.site import SitePlugin, SiteSetup
 
 
 class DemoKnowledge(SitePlugin):
-    id = "demo"  # 和清单里的 id 一样
+    id = "example_demo"  # 和清单里的 id 一样
 
     def stats(self, ctx: ProcessContext) -> dict[str, Any]:
         """这个插件自己的统计，并进每次运行的统计里。示范用，可以删。"""
