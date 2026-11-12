@@ -4,5 +4,5 @@ from jianshanagent.testing.conformance import check_plugin
 
 
 def test_conforms_to_the_plugin_spec() -> None:
-    manifest = check_plugin("jianshanagent_site_example_demo")
-    assert (manifest.id, manifest.parent) == ("example_demo", "example")
+    manifest = check_plugin("jianshanagent_site_demo")
+    assert (manifest.id, manifest.platform) == ("demo", "mediawiki")

@@ -4,5 +4,5 @@ name: "示例"
 wikis:
   - id: main                        # 这个 wiki 在部署里的名字：知识库的目录名、密钥的键
     api_url: "https://wiki.example/api.php"
-    # 只写最末一级；它的上级（平台插件 example）会自动带出来、先加载
-    site: example_demo
+    # 用哪个站点插件；它建在哪个平台上写在它自己的清单里，核心带着的平台会先加载
+    site: demo

@@ -1,9 +1,16 @@
-"""站插件里管查询的那一摊：这个站自己的条目怎么查。
+"""站点插件里管查询的那一摊：这个站自己的条目怎么查。
 
 这里示范的是最简单的一种——配置里的别名表：用户说昵称，对上页面的正式标题。
 :class:`WikiProvider` 的方法都有什么都不做的默认实现，用到哪个覆盖哪个（接口见核心的
 ``plugins/wiki_query/provider.py``）：自己的条目种类（``kinds``、``get_page``、``format_page``）、
 自己的命令和给模型用的工具（``register``）都从这里接。
+
+建在 wiki 平台上的站（清单里写了 ``platform``）要用平台的接口时，在 ``create`` 里拿平台的实例::
+
+    from jianshanagent.platforms.huiji.wiki import HuijiPlatform
+
+    def create(setup: SiteSetup) -> DemoProvider:
+        return DemoProvider(setup.platform(HuijiPlatform), ...)
 """
 
 from __future__ import annotations
@@ -12,15 +19,12 @@ from collections.abc import Mapping
 
 from jianshanagent.plugins.wiki_query.client import NameMatch
 from jianshanagent.plugins.wiki_query.provider import SiteSetup, WikiProvider
-from jianshanagent_site_example.wiki import ExamplePlatform
 
 
 class DemoProvider(WikiProvider):
-    id = "example_demo"  # 和清单里的 id 一样
+    id = "demo"  # 和清单里的 id 一样
 
-    def __init__(self, platform: ExamplePlatform, aliases: Mapping[str, str]):
-        #: 上级（平台插件）在查询这个扩展点上的实例：要读平台的接口时用 ``self.platform.fetch(...)``
-        self.platform = platform
+    def __init__(self, aliases: Mapping[str, str]):
         self.aliases = dict(aliases)
 
     async def lookup_name(self, name: str) -> list[NameMatch]:
@@ -40,6 +44,6 @@ class DemoProvider(WikiProvider):
 
 
 def create(setup: SiteSetup) -> DemoProvider:
-    """入口：``setup.raw`` 是这个插件自己的配置；``setup.parent(类)`` 拿上级的实例。"""
+    """入口：``setup.raw`` 是这个插件自己的配置。"""
     aliases = (setup.raw.get("wiki") or {}).get("aliases") or {}
-    return DemoProvider(setup.parent(ExamplePlatform), aliases)
+    return DemoProvider(aliases)

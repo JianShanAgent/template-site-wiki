@@ -1,9 +1,9 @@
 # 插件清单（格式见核心仓库 agent-core 的 docs/插件规范.md）
-id: example_demo           # 和 pyproject.toml 里登记的名字一样；有上级的，以「上级的 id_」开头
+id: demo                   # 和 pyproject.toml 里登记的名字一样。平台上的站以「平台的 id_」开头，如 huiji_demo
 kind: site
 name: 示例 wiki
 description: <一两句话：这个 wiki 是什么，这个插件管它的哪些特有的东西>
-parent: example            # 上级：它建在哪个平台上。不建在任何平台上的站不写这一行
+# platform: huiji          # 建在哪个 wiki 平台上（核心带着的有 huiji、bwiki）。自己架的 MediaWiki 站不写这一行
 capabilities:
   - wiki        # 查询：这个站自己的条目、别名（wiki.py）
   - knowledge   # 知识库：这个站自己的内容（knowledge.py）

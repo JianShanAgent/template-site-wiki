@@ -1,6 +1,6 @@
-# 站点插件 example_demo 的默认配置（配置名 site.example_demo）。
-# 部署的 core.wiki.yaml 里哪个 wiki 写了 site: example_demo，就对那个 wiki 生效。
-# 某个部署要改：在实例的 config/site.example_demo.yaml 里只写要改的项。
+# 站点插件 demo 的默认配置（配置名 site.demo）。
+# 部署的 core.wiki.yaml 里哪个 wiki 写了 site: demo，就对那个 wiki 生效。
+# 某个部署要改：在实例的 config/site.demo.yaml 里只写要改的项。
 
 wiki:
   # 别名表：昵称 → 页面的正式标题。用户说昵称时，查证能对上正式的页面
